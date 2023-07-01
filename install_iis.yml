@@ -1,0 +1,22 @@
+---
+- name: Install IIS
+  hosts: windows
+  gather_facts: false
+  become: true
+
+  tasks:
+    - name: Install Chocolatey
+      win_chocolatey:
+        name: chocolatey
+        state: present
+
+    - name: Install IIS
+      win_chocolatey:
+        name: iis
+        state: present
+
+    - name: Ensure IIS service is running
+      win_service:
+        name: W3SVC
+        start_mode: auto
+        state: started
